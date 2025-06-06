@@ -1,0 +1,97 @@
+<app-dashboard></app-dashboard>
+
+<app-topo-breadcrumb [items]="items"></app-topo-breadcrumb>
+<div class="grid mt-6">
+  <!-- <div class="col-6 flex justify-content-start">
+    <div>
+      <h2 class="color-padrao">Categorias</h2>
+    </div>
+  </div> -->
+  <div class="col-12 -mt-6 md:mt-2 flex md:justify-content-start lg:justify-content-end flex-wrap">
+    @if (!isResolucaoMobile) {
+    <div class="md:col-3 xl:col-2">
+      <p-floatLabel>
+        <p-calendar
+          [(ngModel)]="dateInicial"
+          [showIcon]="true"
+          [showOnFocus]="false"
+          inputId="buttondisplay"
+          [maxDate]="dataMaximaInicial"
+          (onSelect)="onDataInicialSelected()"
+          (onClose)="onClearDataInicial()"
+          [showClear]="true"
+        />
+        <label class="label-principal" for="buttondisplay">Data inicial</label>
+      </p-floatLabel>
+    </div>
+    <div class="md:col-3 xl:col-2">
+      <p-floatLabel>
+        <p-calendar
+          [(ngModel)]="dateFinal"
+          [showIcon]="true"
+          [showOnFocus]="false"
+          inputId="buttondisplay"
+          [maxDate]="dataMaximaFinal"
+          [minDate]="dataMinimaFinal"
+          (onSelect)="onDataFinalSelected()"
+          (onClose)="onClearDataFinal()"
+          [showClear]="true"
+        />
+        <label class="label-principal" for="buttondisplay">Data final</label>
+      </p-floatLabel>
+    </div>
+
+    <div class="md:col-4 xl:col-2">
+      <p-floatLabel>
+        <input
+          pInputText
+          id="descricaoReuniao"
+          [(ngModel)]="filtroDescricaoReuniao"
+          (keydown.enter)="pesquisarFiltro()"
+        />
+        <label class="label-principal" for="descricaoReuniao">Descrição</label>
+      </p-floatLabel>
+    </div>
+    }
+
+    <div class="col-12 md:col-2 xl:col-1">
+      <p-button
+        [rounded]="true"
+        [text]="true"
+        icon="pi pi-plus"
+        (onClick)="cadastraCategoria()"
+      />
+      <p-button
+        [rounded]="true"
+        [text]="true"
+        icon="pi pi-search"
+        (onClick)="pesquisarFiltro()"
+      />
+
+      @if (isResolucaoMobile) {
+      <p-button
+        [rounded]="true"
+        [text]="true"
+        icon="pi pi-filter"
+        (onClick)="abrirModalFiltro()"
+      />
+      }
+    </div>
+  </div>
+  <div class="col-12 mt-1">
+    <app-tabela
+      [size]="size"
+      [page]="page"
+      [totalRegistros]="totalRegistros"
+      [carregaTabela]="carregaTabela"
+      [dadosGrid]="dadosGrid"
+      [dataKey]="dataKey"
+      [colunas]="colunas"
+      (emissorPaginacao)="recebePaginacao($event)"
+      (emissorEditar)="editaTabela($event)"
+      (emissorRemover)="removeItemTabela($event)"
+    ></app-tabela>
+  </div>
+</div>
+<p-confirmDialog key="dialog-reunioes" />
+<p-toast key="toast-reunioes" position="top-center"></p-toast>

@@ -1,0 +1,75 @@
+<div class="flex flex-wrap justify-content-between mt-4 mb-8 col-12">
+  <div class="col-12 md:col-6">
+    <p-floatLabel>
+      <input
+        pInputText
+        class="input-padrao"
+        id="nomeSetor"
+        [(ngModel)]="this.dadosFormulario.setorNome"
+      />
+      <label class="label-principal" for="nomeSetor">Nome do Setor</label>
+    </p-floatLabel>
+
+    @if(!validador.nomeSetor){
+    <small style="display: block; color: red"
+      >Campo "Nome do Setor" é obrigatorio</small
+    >
+    }
+  </div>
+
+  @if (ehCadastro) {
+    <div class="col-12 md:col-6 mt-3 md:mt-0">
+      <p-floatLabel>
+        <p-dropdown
+          [options]="admOptions"
+          [(ngModel)]="this.dadosFormulario.admId"
+          optionLabel="nomeAdm"
+          optionValue="admId"
+          placeholder=" "
+          [disabled]="isDisable"
+        />
+        <label class="label-principal" for="nomeSetor">Administração</label>
+      </p-floatLabel>
+
+      @if(!validador.nomeAdm){
+      <small style="display: block; color: red"
+        >Campo "Administração" é obrigatorio</small
+      >
+      }
+    </div>
+  }@else {
+    <div class="col-12 md:col-6">
+      <p-floatLabel>
+        <input
+        [disabled]="true"
+          pInputText
+          class="input-padrao"
+          id="nomeAdm"
+          [(ngModel)]="this.dadosFormulario.admNome"
+        />
+        <label class="label-principal" for="nomeSetor">Administração</label>
+      </p-floatLabel>
+    </div>
+  }
+
+</div>
+<div class="custom-div">
+  <div
+    class="flex align-items-center justify-content-center md:justify-content-end mt-2"
+  >
+    <div class="mr-2">
+      <p-button
+        styleClass="p-button-color"
+        (onClick)="salvarDados()"
+        label="Salvar"
+      ></p-button>
+    </div>
+    <div class="">
+      <p-button
+        styleClass="p-button-color"
+        (onClick)="sairModal()"
+        label="Cancelar"
+      ></p-button>
+    </div>
+  </div>
+</div>

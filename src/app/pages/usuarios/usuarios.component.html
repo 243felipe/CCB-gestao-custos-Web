@@ -1,0 +1,49 @@
+<app-dashboard></app-dashboard>
+
+
+<app-topo-breadcrumb [items]="items"></app-topo-breadcrumb>
+<div class="grid mt-6">
+  <!-- <div class="col-6 flex justify-content-start">
+    <div>
+      <h2 class="color-padrao">Categorias</h2>
+    </div>
+  </div> -->
+  <div class="col-12 mt-2 flex justify-content-end">
+    <p-floatLabel>
+      <input
+        pInputText
+        id="descricaoSetores"
+        [(ngModel)]="filtroDescricaoUsuario"
+        (keydown.enter)="pesquisarFiltro()"
+      />
+      <label class="label-principal" for="descricaoSetores">Nome do usuário</label>
+    </p-floatLabel>
+    <p-button
+      [rounded]="true"
+      [text]="true"
+      icon="pi pi-plus"
+      (onClick)="cadastraUsuario()"
+    />
+    <p-button
+      [rounded]="true"
+      [text]="true"
+      icon="pi pi-search"
+      (onClick)="pesquisarFiltro()"
+    />
+  </div>
+  <div class="col-12 mt-1">
+    <app-tabela
+      [size]="size"
+      [page]="page"
+      [totalRegistros]="totalRegistros"
+      [carregaTabela]="carregaTabela"
+      [dadosGrid]="dadosGrid"
+      [dataKey]="dataKey"
+      [colunas]="colunas"
+      (emissorPaginacao)="recebePaginacao($event)"
+      (emissorRemover)="removeItemTabela($event)"
+    ></app-tabela>
+  </div>
+</div>
+<p-confirmDialog key="dialog-cadastro-usuario" />
+<p-toast key="toast-cadastro-usuario" position="top-center"></p-toast>

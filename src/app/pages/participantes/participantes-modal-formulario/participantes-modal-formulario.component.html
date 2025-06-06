@@ -1,0 +1,98 @@
+<div class="flex flex-wrap justify-content-between mt-4 mb-8 col-12">
+  <div class="col-12 md:col-4">
+    <p-floatLabel>
+      <input
+        pInputText
+        class="input-style"
+        id="nomeSetor"
+        [(ngModel)]="this.dadosFormulario.nomeParticipante"
+      />
+      <label class="label-principal" for="nomeSetor">Nome do Participante</label>
+    </p-floatLabel>
+
+    @if(!validador.nomeParticipante){
+    <small style="display: block; color: red"
+      >Campo "Nome do Setor" é obrigatorio</small
+    >
+    }
+  </div>
+  <div class="col-12 md:col-4 mt-3 md:mt-0">
+    <p-floatLabel>
+      <p-dropdown
+        [options]="reuniaoOptions"
+        [(ngModel)]="this.dadosFormulario.reuniaoId"
+        optionLabel="nomeReuniao"
+        optionValue="reuniaoId"
+        placeholder=" "
+        [disabled]="isDisable"
+        filter="true"
+         filterBy="nomeReuniao"
+      />
+      <label class="label-principal" for="nomeSetor">Reunião</label>
+    </p-floatLabel>
+
+    @if(!validador.reuniaoId){
+    <small style="display: block; color: red"
+      >Campo "Reunião" é obrigatorio</small
+    >
+    }
+  </div>
+
+  <div class="col-12 md:col-4 mt-3 md:mt-0">
+    <p-floatLabel>
+      <p-dropdown
+        [options]="comumOptions"
+        [(ngModel)]="this.dadosFormulario.comumParticipante"
+        optionLabel="nomeComum"
+        optionValue="nomeComum"
+        placeholder=" "
+        [disabled]="isDisable"
+      />
+      <label class="label-principal" for="nomeSetor">Comum</label>
+    </p-floatLabel>
+
+    @if(!validador.comumParticipante){
+    <small style="display: block; color: red"
+      >Campo "Comum" é obrigatorio</small
+    >
+    }
+  </div>
+
+  <div class="col-12 md:col-4 mt-4">
+    <p-floatLabel>
+      <input
+        pInputText
+        class="input-padrao input-style"
+        id="nomeSetor"
+        [(ngModel)]="this.dadosFormulario.cargoParticipante"
+      />
+      <label class="label-principal" for="nomeSetor">Cargo</label>
+    </p-floatLabel>
+
+    @if(!validador.nomeParticipante){
+    <small style="display: block; color: red"
+      >Campo "Cargo" é obrigatorio</small
+    >
+    }
+  </div>
+</div>
+<div class="custom-div">
+  <div
+    class="flex align-items-center justify-content-center md:justify-content-end mt-2"
+  >
+    <div class="mr-2">
+      <p-button
+        styleClass="p-button-color"
+        (onClick)="salvarDados()"
+        label="Salvar"
+      ></p-button>
+    </div>
+    <div class="">
+      <p-button
+        styleClass="p-button-color"
+        (onClick)="sairModal()"
+        label="Cancelar"
+      ></p-button>
+    </div>
+  </div>
+</div>

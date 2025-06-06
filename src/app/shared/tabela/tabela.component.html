@@ -1,0 +1,48 @@
+
+<p-table responsiveLayout="scroll" [loading]="carregaTabela" [lazy]="true" [dataKey]="dataKey" [columns]="colunas" [value]="dadosGrid" styleClass="p-datatable-gridlines"
+  [rowsPerPageOptions]="[5,10,25,50]" (onLazyLoad)="pagina($event)" [paginator]="true"
+  [rows]="size" [totalRecords]="totalRegistros" >
+  <ng-template pTemplate="loadingbody">
+    <div class="h-10rem"></div>
+    <div class="h-10rem flex justify-content-center" class="loading-grid" >
+      <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" />
+      <p class="text-3xl ml-2 color-padrao">Buscando Dados...</p>
+    </div>
+  </ng-template>
+  <!-- <ng-template pTemplate="emptymessage" let-colums="columns">
+    <div>
+      <p>Buscando Dados...</p>
+      <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" />
+    </div>
+  </ng-template> -->
+  <ng-template  pTemplate="header" let-columns>
+    <tr>
+      @for (col of columns; track dadosGrid) {
+        <th [pSortableColumn]="col.field" [ngClass]="{'flex justify-content-center' : col.field == 'acoes'}">
+            {{ col.header }}
+            @if(col.field != 'acoes'){
+              <p-sortIcon [field]="col.field" />
+            }
+        </th>
+      }
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    @if(!carregaTabela){
+      <tr>
+        @for (col of columns; track dadosGrid) {
+          @if(col.field == 'acoes'){
+            <td [ngClass]="{'flex justify-content-center' : col.field == 'acoes'}">
+              <p-button [rounded]="true" [text]="true" icon="pi pi-pencil" class="mr-2" (onClick)="editaLinha(rowData)"/>
+              <p-button [rounded]="true" [text]="true" icon="pi pi-trash" class="mr-2" (onClick)="deletaLinha(rowData)"/>
+            </td>
+          } @else{
+            <td>
+              {{ rowData[col.field] }}
+            </td>
+          }
+        }
+      </tr>
+    }
+  </ng-template>
+</p-table>

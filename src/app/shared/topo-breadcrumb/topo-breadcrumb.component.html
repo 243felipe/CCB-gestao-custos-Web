@@ -1,0 +1,12 @@
+<p-breadcrumb class="max-w-full" [model]="items">
+  <ng-template pTemplate="item" let-item>
+    <ng-container>
+      <a [routerLink]="item.route" class="p-menuitem-link">
+        <span [ngClass]="[item.icon ? item.icon : '', 'text-color']"></span>
+        <span [ngClass]="[item.isPrincipal ? 'text-primary font-size-principal': 'text-color']"  class="font-semibold">{{ item.label }}</span>
+      </a>
+    </ng-container>
+  </ng-template>
+</p-breadcrumb>
+
+

@@ -1,0 +1,521 @@
+<div class="card flex justify-content-center">
+  @if (admSelecionado == 'S') {
+
+  <p-stepper [(activeStep)]="active">
+    <p-stepperPanel>
+      <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+        <button
+          class="bg-transparent border-none inline-flex flex-column gap-2"
+        >
+          <span
+            class="border-round border-2 w-3rem h-3rem inline-flex align-items-center justify-content-center"
+            [ngClass]="{
+              'bg-primary border-primary': index <= active,
+              'surface-border': index > active
+            }"
+          >
+            <i class="pi pi-user"></i>
+          </span>
+        </button>
+      </ng-template>
+      <ng-template pTemplate="content" let-nextCallback="nextCallback">
+        <div
+          class="flex flex-column gap-2 mx-auto"
+          style="min-height: 16rem; max-width: 20rem"
+        >
+          <div class="text-center mt-3 mb-3 text-xl font-semibold">
+            + Novo usuário
+          </div>
+          <div class="field p-fluid">
+            <p-iconField>
+              <p-inputIcon>
+                <i class="pi pi-user"></i>
+              </p-inputIcon>
+              <input
+                [(ngModel)]="dadosFormulario.nomeUsuario"
+                pInputText
+                id="input"
+                type="text"
+                placeholder="Nome"
+              />
+            </p-iconField>
+          </div>
+          <div class="field p-fluid">
+            <p-iconField>
+              <p-inputIcon>
+                <i class="pi pi-envelope"></i>
+              </p-inputIcon>
+              <input
+                [(ngModel)]="dadosFormulario.emailUsuario"
+                pInputText
+                id="email"
+                type="email"
+                placeholder="Email"
+              />
+            </p-iconField>
+          </div>
+          <div class="field p-fluid">
+            <p-password
+              [(ngModel)]="dadosFormulario.senha"
+              [toggleMask]="true"
+              feedback="true"
+              placeholder="Senha"
+              promptLabel="Escolha uma senha"
+              weakLabel="Muito simples"
+              mediumLabel="Senha mediana"
+              strongLabel="Senha segura"
+              (ngModelChange)="validatePassword($event)"
+            />
+          </div>
+          @if(!isPasswordValid){
+          <small style="display: block; color: red"
+            >Por motivos de segurança não é possível <br />
+            utlizar a senha inserida.</small
+          >
+          }
+        </div>
+        <div class="custom-div">
+          <div
+            class="flex col-12 align-items-center justify-content-center md:justify-content-end mt-2"
+          >
+            <div class="mr-2">
+              <p-button
+                [disabled]="
+                  dadosFormulario.nomeUsuario != undefined &&
+                  dadosFormulario.nomeUsuario != '' &&
+                  dadosFormulario.emailUsuario != undefined &&
+                  dadosFormulario.emailUsuario != ''  &&
+                  dadosFormulario.senha != undefined &&
+                  dadosFormulario.senha != ''
+                    ? false
+                    : true
+                "
+                styleClass="p-button-color"
+                label="Avançar"
+                icon="pi pi-arrow-right"
+                iconPos="right"
+                (onClick)="avancarParaTelaAdm(nextCallback)"
+              />
+            </div>
+            <div class="">
+              <p-button styleClass="p-button-color" label="Cancelar" (onClick)="cancelarCadastro()"></p-button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+    <p-stepperPanel>
+      <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+        <button
+          class="bg-transparent border-none inline-flex flex-column gap-2"
+        >
+          <span
+            class="border-round border-2 w-3rem h-3rem inline-flex align-items-center justify-content-center"
+            [ngClass]="{
+              'bg-primary border-primary': index <= active,
+              'surface-border': index > active
+            }"
+          >
+            <i class="bi bi-diagram-2-fill font-icon-style"></i>
+          </span>
+        </button>
+      </ng-template>
+      <ng-template
+        pTemplate="content"
+        let-prevCallback="prevCallback"
+        let-nextCallback="nextCallback"
+      >
+        <div
+          class="flex flex-column gap-2 mx-auto mt-8"
+          style="min-height: 16rem; max-width: 24rem"
+        >
+          <div class="text-center -mt-7 mb-3 text-xl font-semibold">
+            Acesso e Permissões
+          </div>
+
+          <div class="mt-5">
+            <p-floatLabel>
+              <p-dropdown
+                [options]="isAdmOptions"
+                [(ngModel)]="admSelecionado"
+                optionLabel="name"
+                optionValue="id"
+                placeholder=" "
+              />
+              <label class="label-principal" for="nomeSetor"
+                >É Administrador?</label
+              >
+            </p-floatLabel>
+          </div>
+
+          <div class="mt-5">
+            <p-floatLabel>
+              <p-dropdown
+                [options]="admOptions"
+                [(ngModel)]="this.dadosFormulario.admId"
+                optionLabel="nomeAdm"
+                optionValue="admId"
+                placeholder=" "
+                (onChange)="buscaDadosDropDownSetor()"
+                [disabled]="isDisable"
+              />
+              <label class="label-principal" for="nomeSetor"
+                >Administração</label
+              >
+            </p-floatLabel>
+          </div>
+          @if(!validador.admId){
+          <small style="display: block; color: red"
+            >Campo "Administração" é obrigatorio</small
+          >
+          }
+        </div>
+        <div class="custom-div">
+          <div
+            class="flex align-items-center justify-content-center md:justify-content-end mt-2"
+          >
+            <div class="flex col-5 md:col-6 justify-content-start">
+              <p-button
+                label="Voltar"
+                styleClass="p-button-color"
+                icon="pi pi-arrow-left"
+                (onClick)="prevCallback.emit()"
+              />
+            </div>
+            <div class="mr-2">
+              <p-button
+                styleClass="p-button-color"
+                label="Salvar"
+                (onClick)="salvarDadosPorAdm()"
+              ></p-button>
+            </div>
+            <div class="">
+              <p-button styleClass="p-button-color" label="Cancelar" (onClick)="cancelarCadastro()"></p-button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+  </p-stepper>
+  } @if (admSelecionado == 'N') {
+  <p-stepper [(activeStep)]="active">
+    <p-stepperPanel>
+      <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+        <button
+          class="bg-transparent border-none inline-flex flex-column gap-2"
+        >
+          <span
+            class="border-round border-2 w-3rem h-3rem inline-flex align-items-center justify-content-center"
+            [ngClass]="{
+              'bg-primary border-primary': index <= active,
+              'surface-border': index > active
+            }"
+          >
+            <i class="pi pi-user"></i>
+          </span>
+        </button>
+      </ng-template>
+      <ng-template pTemplate="content" let-nextCallback="nextCallback">
+        <div
+          class="flex flex-column gap-2 mx-auto"
+          style="min-height: 16rem; max-width: 20rem"
+        >
+          <div class="text-center mt-3 mb-3 text-xl font-semibold">
+            + Novo usuário
+          </div>
+          <div class="field p-fluid">
+            <p-iconField>
+              <p-inputIcon>
+                <i class="pi pi-user"></i>
+              </p-inputIcon>
+              <input
+                [(ngModel)]="dadosFormulario.nomeUsuario"
+                pInputText
+                id="input"
+                type="text"
+                placeholder="Nome"
+              />
+            </p-iconField>
+          </div>
+          <div class="field p-fluid">
+            <p-iconField>
+              <p-inputIcon>
+                <i class="pi pi-envelope"></i>
+              </p-inputIcon>
+              <input
+                [(ngModel)]="dadosFormulario.emailUsuario"
+                pInputText
+                id="email"
+                type="email"
+                placeholder="Email"
+              />
+            </p-iconField>
+          </div>
+          <div class="field p-fluid">
+            <p-password
+              [(ngModel)]="dadosFormulario.senha"
+              [toggleMask]="true"
+              feedback="false"
+              placeholder="Senha"
+            />
+          </div>
+          @if(!isPasswordValid){
+          <small style="display: block; color: red"
+            >Por motivos de segurança não é possível <br />
+            utlizar a senha inserida.</small
+          >
+          }
+        </div>
+        <div class="custom-div">
+          <div
+            class="flex col-12 align-items-center justify-content-center md:justify-content-end mt-2"
+          >
+            <div class="mr-2">
+              <p-button
+                [disabled]="
+                  dadosFormulario.nomeUsuario != undefined &&
+                  dadosFormulario.nomeUsuario != '' &&
+                  dadosFormulario.emailUsuario != undefined &&
+                  dadosFormulario.emailUsuario != '' &&
+                  dadosFormulario.senha != undefined &&
+                  dadosFormulario.senha != ''
+                    ? false
+                    : true
+                "
+                styleClass="p-button-color"
+                label="Avançar"
+                icon="pi pi-arrow-right"
+                iconPos="right"
+                (onClick)="avancarParaTelaAdm(nextCallback)"
+              />
+            </div>
+            <div class="">
+              <p-button styleClass="p-button-color" label="Cancelar" (onClick)="cancelarCadastro()"></p-button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+    <p-stepperPanel>
+      <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+        <button
+          class="bg-transparent border-none inline-flex flex-column gap-2"
+        >
+          <span
+            class="border-round border-2 w-3rem h-3rem inline-flex align-items-center justify-content-center"
+            [ngClass]="{
+              'bg-primary border-primary': index <= active,
+              'surface-border': index > active
+            }"
+          >
+            <i class="bi bi-diagram-2-fill font-icon-style"></i>
+          </span>
+        </button>
+      </ng-template>
+      <ng-template
+        pTemplate="content"
+        let-prevCallback="prevCallback"
+        let-nextCallback="nextCallback"
+      >
+        <div
+          class="flex flex-column gap-2 mx-auto mt-8"
+          style="min-height: 16rem; max-width: 24rem"
+        >
+          <div class="text-center -mt-7 mb-3 text-xl font-semibold">
+            Acesso e Permissões
+          </div>
+
+          <div class="mt-5">
+            <p-floatLabel>
+              <p-dropdown
+                [options]="isAdmOptions"
+                [(ngModel)]="admSelecionado"
+                optionLabel="name"
+                optionValue="id"
+                placeholder=" "
+              />
+              <label class="label-principal" for="nomeSetor"
+                >É Administrador?</label
+              >
+            </p-floatLabel>
+          </div>
+
+          <div class="mt-5">
+            <p-floatLabel>
+              <p-dropdown
+                [options]="admOptions"
+                [(ngModel)]="this.dadosFormulario.admId"
+                (onChange)="buscaDadosDropDownSetor()"
+                optionLabel="nomeAdm"
+                optionValue="admId"
+                placeholder=" "
+                [disabled]="isDisable"
+              />
+              <label class="label-principal" for="nomeSetor"
+                >Administração</label
+              >
+            </p-floatLabel>
+          </div>
+        </div>
+        <div class="custom-div">
+          <div
+            class="flex align-items-center justify-content-center md:justify-content-end mt-2"
+          >
+            <div class="flex col-5 justify-content-start">
+              <p-button
+                label="Voltar"
+                styleClass="p-button-color"
+                icon="pi pi-arrow-left"
+                (onClick)="prevCallback.emit()"
+              />
+            </div>
+
+            <div class="mr-2">
+              <p-button
+                [disabled]="
+                  this.dadosFormulario.admId != undefined &&
+                  this.dadosFormulario.admId != null
+                    ? false
+                    : true
+                "
+                styleClass="p-button-color"
+                label="Avançar"
+                icon="pi pi-arrow-right"
+                iconPos="right"
+                (onClick)="nextCallback.emit()"
+              />
+            </div>
+
+            <div class="">
+              <p-button styleClass="p-button-color" label="Cancelar" (onClick)="cancelarCadastro()"></p-button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+
+    <p-stepperPanel>
+      <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+        <button
+          class="bg-transparent border-none inline-flex flex-column gap-2"
+        >
+          <span
+            class="border-round border-2 w-3rem h-3rem inline-flex align-items-center justify-content-center"
+            [ngClass]="{
+              'bg-primary border-primary': index <= active,
+              'surface-border': index > active
+            }"
+          >
+            <i class="pi pi-check"></i>
+          </span>
+        </button>
+      </ng-template>
+      <ng-template
+        pTemplate="content"
+        let-prevCallback="prevCallback"
+        let-nextCallback="nextCallback"
+      >
+        <div
+          class="flex flex-column gap-2 mx-auto mt-8"
+          style="min-height: 16rem; max-width: 24rem"
+        >
+          <div class="text-center -mt-7 mb-3 text-xl font-semibold">
+            Acesso e Permissões
+          </div>
+
+          <div class="mt-5">
+            <p-floatLabel>
+              <p-dropdown
+                [options]="setorOptions"
+                [(ngModel)]="this.dadosFormulario.setorId"
+                optionLabel="setorNome"
+                optionValue="setorId"
+                placeholder=" "
+                [disabled]="isDisable"
+                (onChange)="onChangeSetor()"
+              />
+              <label class="label-principal" for="nomeSetor">Setor</label>
+            </p-floatLabel>
+          </div>
+
+          @if(!validador.setorId){
+          <small style="display: block; color: red"
+            >Campo "Setor" é obrigatorio</small
+          >
+          }
+
+          <div class="mt-5">
+            <p-floatLabel>
+              <p-dropdown
+                [options]="isTotalSetorOptions"
+                [(ngModel)]="totalSetorSelecionado"
+                optionLabel="name"
+                optionValue="id"
+                placeholder=" "
+                (onChange)="verificaTotalSetor()"
+              />
+              <label class="label-principal" for="nomeSetor"
+                >Terá acesso total do Setor?</label
+              >
+            </p-floatLabel>
+          </div>
+
+          @if (totalSetorSelecionado === 'N' && this.dadosFormulario.setorId != undefined && this.dadosFormulario.setorId != null) {
+          <div class="mt-5">
+            <p-floatLabel>
+              <p-dropdown
+                [options]="comumOptions"
+                [(ngModel)]="this.dadosFormulario.igrId"
+                optionLabel="nomeComum"
+                optionValue="igrId"
+                placeholder=" "
+              />
+              <label class="label-principal" for="nomeSetor"
+                >Casa de oração</label
+              >
+            </p-floatLabel>
+          </div>
+
+          @if(!validador.igrId){
+          <small style="display: block; color: red"
+            >Campo "Casa de oração" é obrigatorio</small
+          >
+          } }
+        </div>
+
+        <div class="custom-div">
+          <div
+            class="flex align-items-center justify-content-center md:justify-content-end mt-2"
+          >
+            <div class="flex col-5 md:col-6 justify-content-start">
+              <p-button
+                label="Voltar"
+                styleClass="p-button-color"
+                icon="pi pi-arrow-left"
+                (onClick)="voltarTelaSetorParaTelaAdm(prevCallback)"
+              />
+            </div>
+            <div class="mr-2">
+              <p-button
+                styleClass="p-button-color"
+                label="Salvar"
+                [disabled]="
+                  totalSetorSelecionado != undefined &&
+                  totalSetorSelecionado != null
+                    ? false
+                    : true
+                "
+                (onClick)="salvarDadosPorSetor()"
+              ></p-button>
+            </div>
+
+            <div class="">
+              <p-button styleClass="p-button-color" label="Cancelar" (onClick)="cancelarCadastro()"></p-button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+  </p-stepper>
+  }
+</div>

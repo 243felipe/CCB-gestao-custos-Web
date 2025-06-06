@@ -1,0 +1,26 @@
+<p-toolbar styleClass="fundo-topo">
+  @if (!isMenuDashBoard) {
+    <ng-template pTemplate="start">
+      <div class="-mt-2 flex align-items-center ml-3">
+        <h2 style="color: white;" class="fonte-padrao" >CCB - Gestão Orçamentária</h2>
+      </div>
+   </ng-template>
+  }
+
+  @if (isMenuDashBoard) {
+    <div class="p-toolbar-group-start">
+      <div class="flex align-items-center">
+        <p-button (onClick)="clicaMenu()" styleClass="hover-botao" [rounded]="true" [text]="true" icon="pi pi-bars" class="mr-2"/>
+        <div class="">
+          <h2 style="color: white;" class="fonte-padrao">CCB - Gestão Orçamentária</h2>
+        </div>
+      </div>
+    </div>
+    <div class="p-toolbar-group-end">
+      <div class="flex align-items-center">
+        <p-button class="hover-botao" icon="pi pi-user" [rounded]="true" [text]="true" class="mr-2"/>
+      </div>
+    </div>
+  }
+
+</p-toolbar>

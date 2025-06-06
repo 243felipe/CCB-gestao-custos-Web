@@ -1,0 +1,25 @@
+<div>
+    <p-sidebar [(visible)]="sidebarVisible" (onHide)="escondeMenu()" class="teste">
+      <ng-template pTemplate="header">
+      <div class="logo-container">
+        <img src="/assets/logo.png" alt="Logo" class="imagem-format" />
+      </div>
+      </ng-template>
+
+      <ng-template pTemplate="content">
+        <p-tree class="" selectionMode="single"  [value]="menu" (onNodeSelect)="clicaMenu($event)" (onNodeUnselect)="clicaMenu($event)" />
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <div class="flex align-items-center">
+          <p-button
+            (onClick)="encerrarSessao()"
+            [rounded]="true"
+            [text]="true"
+            icon="pi pi-sign-out"
+            class="mr-2"
+          />
+          <h3>Sair</h3>
+        </div>
+      </ng-template>
+    </p-sidebar>
+</div>

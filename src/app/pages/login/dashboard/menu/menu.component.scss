@@ -1,0 +1,41 @@
+:host ::ng-deep {
+  .p-button {
+    border: none !important;
+    color: #119dcb !important;
+  }
+
+  .p-button.p-button-text:not(:disabled):hover {
+    background-color: #ade7fb;
+    border: none !important;
+  }
+
+  .p-button.p-button-text:enabled:focus {
+    box-shadow: none !important;
+  }
+
+  .pi {
+    font-size: 1.5rem;
+  }
+
+  .p-tree {
+    border: none !important;
+  }
+
+  .logo-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 180px;
+  margin-bottom: 2rem; 
+  overflow: hidden;
+}
+
+.imagem-format {
+  margin-top: 15px;
+  max-height: 360px; 
+  max-width: 300px;
+  object-fit: contain;
+}
+
+}

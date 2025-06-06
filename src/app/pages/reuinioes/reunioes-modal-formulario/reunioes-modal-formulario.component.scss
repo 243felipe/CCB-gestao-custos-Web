@@ -1,0 +1,74 @@
+:host ::ng-deep {
+  label {
+    font-size: 1rem;
+  }
+
+  .custom-div {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0.5rem !important;
+    right: 0rem !important;
+    padding: 0.5rem !important;
+    background: #ffffff;
+  }
+
+  @media (max-width: 768px) {
+    .custom-div {
+      position: absolute !important;
+      bottom: 0 !important;
+      left: 0.5rem !important;
+      right: 0.5rem !important;
+      padding: 0.5rem !important;
+      background: #ffffff;
+    }
+  }
+
+  @media (min-width: 1649px) {
+    .p-dropdown {
+      display: inline-flex;
+      cursor: pointer;
+      position: relative;
+      -webkit-user-select: none;
+      user-select: none;
+      width: 16rem !important;
+    }
+    .input-style {
+      width: 16rem !important;
+    }
+  }
+
+  .textStyle {
+    width: 486px !important;
+    height: 69px !important;
+    border-radius: 0.25rem !important;
+    font-size: 1rem !important;
+  }
+
+  @media (min-width: 1181px) {
+    .textStyleAta {
+      width: 1063px !important;
+      height: 300px !important;
+      border-radius: 0.25rem !important;
+      font-size: 1rem !important;
+    }
+  }
+
+  @media (max-width: 1180px) {
+    .textStyleAta {
+      width: 1063px !important;
+      height: 205px !important;
+      border-radius: 0.25rem !important;
+      font-size: 1rem !important;
+    }
+  }
+
+  //   .p-stepper .p-stepper-panels {
+  //     background: #ffffff;
+  //     padding: 1.25rem;
+  //     color: #00000091;
+  // }
+
+  .p-button {
+    border: 1px solid #119dcb !important;
+  }
+}

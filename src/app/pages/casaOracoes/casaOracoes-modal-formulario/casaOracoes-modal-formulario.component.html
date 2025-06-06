@@ -1,0 +1,242 @@
+<div class="flex flex-wrap justify-content-between mt-4 mb-8 col-12">
+  <div class="col-12 md:col-4">
+    <p-floatLabel>
+      <input
+        class="input-style"
+        pInputText
+        id="nomeSetor"
+        maxlength="50"
+        [(ngModel)]="this.dadosFormulario.igrNome"
+      />
+      <label class="label-principal" for="nomeSetor">Nome</label>
+    </p-floatLabel>
+
+    @if(!validador.igrNome){
+    <small style="display: block; color: red"
+      >Campo "Nome da casa de Oração" é obrigatorio</small
+    >
+    }
+  </div>
+  <div class="col-12 md:col-4">
+    <p-floatLabel>
+      <input
+        class="input-style"
+        pInputText
+        id="nomeSetor"
+        maxlength="10"
+        [(ngModel)]="this.dadosFormulario.igrCod"
+      />
+      <label class="label-principal" for="nomeSetor">Cód. Igreja</label>
+    </p-floatLabel>
+
+    @if(!validador.igrCod){
+    <small style="display: block; color: red"
+      >Campo "Cód. Igreja" é obrigatorio</small
+    >
+    }
+  </div>
+
+  @if (this.ehCadastro) {
+  <div class="col-12 md:col-4 mt-3 md:mt-0">
+    <p-floatLabel>
+      <p-dropdown
+        [options]="setorOptions"
+        [(ngModel)]="this.dadosFormulario.setorId"
+        optionLabel="setorNome"
+        optionValue="setorId"
+        placeholder=" "
+        [disabled]="isDisable"
+      />
+      <label class="label-principal" for="nomeSetor">Setor</label>
+    </p-floatLabel>
+
+    @if(!validador.setorId){
+    <small style="display: block; color: red"
+      >Campo "Setor" é obrigatorio</small
+    >
+    }
+  </div>
+  <div class="col-12 md:col-4 mt-3 mt-2">
+    <p-floatLabel>
+      <p-dropdown
+        [options]="admOptions"
+        [(ngModel)]="this.dadosFormulario.admId"
+        optionLabel="nomeAdm"
+        optionValue="admId"
+        placeholder=" "
+        [disabled]="isDisable"
+      />
+      <label class="label-principal" for="nomeSetor">Administração</label>
+    </p-floatLabel>
+
+    @if(!validador.admId){
+    <small style="display: block; color: red"
+      >Campo "Administração" é obrigatorio</small
+    >
+    }
+  </div>
+  }@else{
+  <div class="col-12 md:col-4">
+    <p-floatLabel>
+      <input
+        [disabled]="true"
+        class="input-style"
+        pInputText
+        id="nomeSetor"
+        [(ngModel)]="this.dadosFormulario.setorNome"
+      />
+      <label class="label-principal" for="nomeSetor">Setor</label>
+    </p-floatLabel>
+
+    @if(!validador.igrNome){
+    <small style="display: block; color: red"
+      >Campo "Setor" é obrigatorio</small
+    >
+    }
+  </div>
+
+  <div class="col-12 md:col-4 mt-2  md:mt-3">
+    <p-floatLabel>
+      <input
+        [disabled]="true"
+        class="input-style"
+        pInputText
+        id="nomeSetor"
+        [(ngModel)]="this.dadosFormulario.admNome"
+      />
+      <label class="label-principal" for="nomeSetor">Administração</label>
+    </p-floatLabel>
+
+    @if(!validador.admNome){
+    <small style="display: block; color: red"
+      >Campo "Administração" é obrigatorio</small
+    >
+    }
+  </div>
+  }
+
+  <div class="col-12 md:col-4 mt-2  md:mt-3">
+    <p-floatLabel>
+      <input
+        class="input-style"
+        pInputText
+        id="nomeSetor"
+        maxlength="2"
+        [disabled]="!ehCadastro"
+        [(ngModel)]="this.dadosFormulario.igrEstado"
+      />
+      <label class="label-principal" for="nomeSetor">Estado</label>
+    </p-floatLabel>
+
+    @if(!validador.igrEstado){
+    <small style="display: block; color: red"
+      >Campo "Estado" é obrigatorio</small
+    >
+    }
+  </div>
+  <div class="col-12 md:col-4 mt-2 md:mt-3">
+    <p-floatLabel>
+      <input
+        class="input-style"
+        pInputText
+        id="nomeSetor"
+        maxlength="30"
+        [disabled]="!ehCadastro"
+        [(ngModel)]="this.dadosFormulario.igrCidade"
+      />
+      <label class="label-principal" for="nomeSetor">Cidade</label>
+    </p-floatLabel>
+
+    @if(!validador.igrCidade){
+    <small style="display: block; color: red"
+      >Campo "Cidade" é obrigatorio</small
+    >
+    }
+  </div>
+  <div class="col-12 md:col-4 mt-2 md:mt-3">
+    <p-floatLabel>
+      <input
+        class="input-style"
+        pInputText
+        id="nomeSetor"
+        maxlength="100"
+        [(ngModel)]="this.dadosFormulario.igrBairro"
+      />
+      <label class="label-principal" for="nomeSetor">Bairro</label>
+    </p-floatLabel>
+
+    @if(!validador.igrBairro){
+    <small style="display: block; color: red"
+      >Campo "Bairro" é obrigatorio</small
+    >
+    }
+  </div>
+  <div class="col-12 md:col-4 mt-2  md:mt-3">
+    <p-floatLabel>
+      <input
+        class="input-style"
+        pInputText
+        id="nomeSetor"
+        maxlength="10"
+        [(ngModel)]="this.dadosFormulario.igrCep"
+      />
+      <label class="label-principal" for="nomeSetor">CEP</label>
+    </p-floatLabel>
+
+    @if(!validador.igrCep){
+    <small style="display: block; color: red"
+      >Campo "CEP" é obrigatorio</small
+    >
+    }
+  </div>
+  <div class="col-12 md:col-4 mt-2  md:mt-3">
+    <p-floatLabel>
+      <input
+        class="input-style"
+        pInputText
+        id="nomeSetor"
+        maxlength="100"
+        [(ngModel)]="this.dadosFormulario.igrEndereco"
+      />
+      <label class="label-principal" for="nomeSetor">Endereço</label>
+    </p-floatLabel>
+
+    @if(!validador.igrEndereco){
+    <small style="display: block; color: red"
+      >Campo "Endereço" é obrigatorio</small
+    >
+    }
+  </div>
+  <div class="col-12 md:col-4 mt-2  md:mt-3">
+    <p-floatLabel>
+      <input
+        class="input-style"
+        pInputText
+        id="nomeSetor"
+        maxlength="40"
+        [(ngModel)]="this.dadosFormulario.igrComplemento"
+      />
+      <label class="label-principal" for="nomeSetor">Complemneto</label>
+    </p-floatLabel>
+  </div>
+</div>
+<div class="custom-div">
+  <div
+    class="flex align-items-center justify-content-center md:justify-content-end mt-2"
+  >
+    <div class="mr-2">
+      <p-button
+        styleClass="p-button-color"
+        (onClick)="salvarDados()"
+        label="Salvar"
+      ></p-button>
+    </div>
+    <div class="">
+      <p-button
+        styleClass="p-button-color"
+        (onClick)="sairModal()"
+        label="Cancelar"
+      ></p-button>
+    </div>
+  </div>
+</div>

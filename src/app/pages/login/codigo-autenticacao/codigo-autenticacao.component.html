@@ -1,0 +1,66 @@
+<div>
+  <app-topo-paginas [isMenuDashBoard]="isMenuDashBoard" ></app-topo-paginas>
+
+  <section class="container forms">
+    <p-toast position="top-center" key="autenticacao" />
+    <div class="form login">
+      <div class="col-12 flex justify-content-end">
+        <p-button
+          class="button-style button-border"
+          icon=" pi pi-sign-out"
+          iconPos="left"
+          pTooltip="Sair"
+          (onClick)="retornarTelaLogin()"
+        >
+        </p-button>
+      </div>
+      <div class="form-content mt-6">
+        <h1 class="font-header fonte-padrao col-12 flex justify-content-center color-padrao">
+          Autenticação de dois fatores
+        </h1>
+
+        <div class="mt-5">
+          <h4 class="ml-1 flex justify-content-center" style="color: #002633b5;">
+            Um código de verificação foi enviado ao email logado.
+          </h4>
+          <h4 class="ml-1 mt-3 col-12 flex justify-content-center" style="color: #002633b5;">
+            Insira o código para prosseguir com o login.
+          </h4>
+        </div>
+
+        <form class="grupoInputs ml-0 col-12 flex justify-content-center">
+          <code-input
+            [disabled]="isDisable"
+            [isCodeHidden]="false"
+            [codeLength]="6"
+            (codeChanged)="onCodeChanged($event)"
+            (codeCompleted)="onCodeCompleted($event)"
+          >
+          </code-input>
+        </form>
+
+        @if (codigoNaoCompleto) {
+        <div class="col-12 flex justify-content-center mt-3">
+          <p style="color: red">Código não inserido por completo</p>
+        </div>
+        } @if (isCodigoInvalido) {
+        <div class="col-12 flex justify-content-center mt-3">
+          <p style="color: red">Código inválido</p>
+        </div>
+        }
+
+        <div class="col-12 mt-6 flex justify-content-center">
+          <p-button
+            class="button-style fonte-padrao"
+            label="Autenticar código"
+            icon="bi bi-shield-check"
+            iconPos="left"
+            [loading]="isLoading"
+            (onClick)="autenticarCodigo()"
+          >
+          </p-button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

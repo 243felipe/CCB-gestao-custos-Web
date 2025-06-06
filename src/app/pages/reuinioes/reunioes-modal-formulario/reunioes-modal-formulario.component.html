@@ -1,0 +1,226 @@
+<div class="flex flex-wrap justify-content-between mt-4 mb-8 col-12">
+  <div class="col-12 -mt-7 md:-mt-7 xl:-mt-6">
+    <p-stepper class="m-0 col-12">
+      <p-stepperPanel
+        [header]="isResolucaoMobile ? 'Inicial' : 'Cadastro Inicial'"
+      >
+        <ng-template
+          pTemplate="content"
+          let-nextCallback="nextCallback"
+          let-index="index"
+        >
+          <div class="flex flex-wrap h-12rem -mt-3 md:mt-3 xl:mt-5">
+            <div class="col-12 md:col-12 lg:col-4 mt-3 md:mt-0">
+              <p-floatLabel>
+                <p-dropdown
+                  [options]="statusOptions"
+                  [(ngModel)]="this.dadosFormulario.reuniaoStatus"
+                  optionLabel="name"
+                  optionValue="id"
+                  placeholder=" "
+                  [disabled]="isDisable"
+                />
+                <label class="label-principal" for="nomeSetor"
+                  >Status da Reunião</label
+                >
+              </p-floatLabel>
+
+              @if(!validador.reuniaoStatus){
+              <small style="display: block; color: red"
+                >Campo "Status da Reunião" é obrigatorio</small
+              >
+              }
+            </div>
+
+            <div class="col-12 mt-3 md:mt-2 lg:mt-0 md:col-6 lg:col-4">
+              <p-floatLabel>
+                <p-calendar
+                  [(ngModel)]="dateInicial"
+                  [showIcon]="true"
+                  [showOnFocus]="false"
+                  inputId="buttondisplay"
+                  [maxDate]="dataMaximaInicial"
+                  [minDate]="dataMinima"
+                  (onSelect)="onDataInicialSelected()"
+                  (onClose)="onClearDataInicial()"
+                  [showTime]="true"
+                  [showClear]="true"
+                />
+                <label class="label-principal" for="buttondisplay"
+                  >Data inicial</label
+                >
+              </p-floatLabel>
+
+              @if(!validador.reuniaoDataIni){
+              <small style="display: block; color: red"
+                >Campo "Data inicial" é obrigatorio</small
+              >
+              }
+            </div>
+            <div class="col-12 mt-3 md:mt-2 lg:mt-0 md:col-6 lg:col-4">
+              <p-floatLabel>
+                <p-calendar
+                  [(ngModel)]="dateFinal"
+                  [showIcon]="true"
+                  [showOnFocus]="false"
+                  inputId="buttondisplay"
+                  [maxDate]="dataMaximaFinal"
+                  [minDate]="
+                    dataMinimaFinal != null && dataMinimaFinal != undefined
+                      ? dataMinimaFinal
+                      : dataMinima
+                  "
+                  (onSelect)="onDataFinalSelected()"
+                  (onClose)="onClearDataFinal()"
+                  [showTime]="true"
+                  [showClear]="true"
+                />
+                <label class="label-principal" for="buttondisplay"
+                  >Data final</label
+                >
+              </p-floatLabel>
+
+              @if(!validador.reuniaoDataFim){
+              <small style="display: block; color: red"
+                >Campo "Data final" é obrigatorio</small
+              >
+              }
+            </div>
+
+            <div class="col-12 md:col-4">
+              <p-floatLabel>
+                <input
+                  pInputText
+                  id="descricaoReuniao"
+                  [(ngModel)]="dadosFormulario.reuniaoDescricao"
+                />
+                <label class="label-principal" for="descricaoReuniao"
+                  >Descrição da Reunião</label
+                >
+              </p-floatLabel>
+
+              @if(!validador.reuniaoDescricao){
+              <small style="display: block; color: red"
+                >Campo "Descrição da Reunião" é obrigatorio</small
+              >
+              }
+            </div>
+
+            <div class="col-12 md:col-12 lg:col-4 mt-3 md:mt-0">
+              <p-floatLabel>
+                <p-dropdown
+                  [options]="admOptions"
+                  [(ngModel)]="this.dadosFormulario.admId"
+                  optionLabel="nomeAdm"
+                  optionValue="admId"
+                  placeholder=" "
+                />
+                <label class="label-principal" for="nomeSetor"
+                  >Administração</label
+                >
+              </p-floatLabel>
+              @if(!validador.admId){
+                <small style="display: block; color: red"
+                  >Campo "Administração" é obrigatorio</small
+                >
+                }
+
+            </div>
+
+            <!-- <div class="col-6 flex justify-content-center -mt-3">
+              <p>{{ myInput.value.length }}/100</p>
+            </div> -->
+          </div>
+
+          <div class="custom-div">
+            <div
+              class="flex col-12 align-items-center justify-content-center md:justify-content-end mt-2"
+            >
+              <div class="mr-2">
+                <!-- <p-button
+                  styleClass="p-button-color"
+                  (onClick)="salvarDados()"
+                  label="Salvar"
+                ></p-button> -->
+                <p-button
+                  styleClass="p-button-color"
+                  label="Avançar"
+                  icon="pi pi-arrow-right"
+                  iconPos="right"
+                  (onClick)="nextCallback.emit()"
+                />
+              </div>
+              <div class="">
+                <p-button
+                  styleClass="p-button-color"
+                  (onClick)="sairModal()"
+                  label="Cancelar"
+                ></p-button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-stepperPanel>
+      <p-stepperPanel [header]="isResolucaoMobile ? 'ATA' : 'Criação da ATA '">
+        <ng-template
+          pTemplate="content"
+          let-prevCallback="prevCallback"
+          let-nextCallback="nextCallback"
+          let-index="index"
+        >
+          <div class="flex flex-column h-12rem">
+            <div class="md:col-12 flex justify-content-start -mt-3 md:-mt-5">
+              <h4>Preencha esta ATA de acordo com a reunião correspondente:</h4>
+            </div>
+            <div class="md:col-12 flex justify-content-start mt-0 md:-mt-5">
+              <textarea
+                #myInput
+                class="textStyleAta fonte-padrao"
+                rows="5"
+                cols="30"
+                maxlength="5000"
+                pInputTextarea
+                [(ngModel)]="descricaoAta"
+              ></textarea>
+            </div>
+            @if(!validador.reuniaoAta){
+            <small style="display: block; color: red"
+              >Campo "ATA" é obrigatorio</small
+            >
+            }
+          </div>
+
+          <div class="custom-div">
+            <div
+              class="flex align-items-center justify-content-center md:justify-content-end mt-2"
+            >
+              <div class="flex col-5 md:col-9 justify-content-start">
+                <p-button
+                  label="Voltar"
+                  styleClass="p-button-color"
+                  icon="pi pi-arrow-left"
+                  (onClick)="prevCallback.emit()"
+                />
+              </div>
+              <div class="mr-2">
+                <p-button
+                  styleClass="p-button-color"
+                  (onClick)="salvarDados()"
+                  label="Salvar"
+                ></p-button>
+              </div>
+              <div class="">
+                <p-button
+                  styleClass="p-button-color"
+                  (onClick)="sairModal()"
+                  label="Cancelar"
+                ></p-button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-stepperPanel>
+    </p-stepper>
+  </div>
+  <p-toast key="toast-reunioes-formulario" position="top-center"></p-toast>
+</div>

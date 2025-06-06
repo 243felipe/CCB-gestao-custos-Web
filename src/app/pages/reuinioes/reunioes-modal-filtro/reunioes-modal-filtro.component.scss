@@ -1,0 +1,33 @@
+:host ::ng-deep {
+  .style-input-filter {
+    width: 19.5rem !important;
+  }
+
+  label {
+    font-size: 1rem !important;
+  }
+
+  .custom-div {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0.5rem !important;
+    right: 0rem !important;
+    padding: 0.5rem !important;
+    background: #ffffff;
+  }
+
+  @media (max-width: 768px) {
+    .custom-div {
+      position: absolute !important;
+      bottom: 0 !important;
+      left: 0.5rem !important;
+      right: 0.5rem !important;
+      padding: 0.5rem !important;
+      background: #ffffff;
+    }
+  }
+
+  .p-button {
+    border: 1px solid #119dcb !important;
+  }
+}

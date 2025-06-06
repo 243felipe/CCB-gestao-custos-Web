@@ -1,0 +1,50 @@
+<app-dashboard></app-dashboard>
+
+
+<app-topo-breadcrumb [items]="items"></app-topo-breadcrumb>
+<div class="grid mt-6">
+  <!-- <div class="col-6 flex justify-content-start">
+    <div>
+      <h2 class="color-padrao">Categorias</h2>
+    </div>
+  </div> -->
+  <div class="col-12 mt-2 flex justify-content-end">
+    <p-floatLabel>
+      <input
+        pInputText
+        id="descricaoPrioriade"
+        [(ngModel)]="filtroDescricaoPrioridade"
+        (keydown.enter)="pesquisarFiltro()"
+      />
+      <label class="label-principal" for="descricaoPrioriade">Nome da Prioriade</label>
+    </p-floatLabel>
+    <p-button
+      [rounded]="true"
+      [text]="true"
+      icon="pi pi-plus"
+      (onClick)="cadastraCategoria()"
+    />
+    <p-button
+      [rounded]="true"
+      [text]="true"
+      icon="pi pi-search"
+      (onClick)="pesquisarFiltro()"
+    />
+  </div>
+  <div class="col-12 mt-1">
+    <app-tabela
+      [size]="size"
+      [page]="page"
+      [totalRegistros]="totalRegistros"
+      [carregaTabela]="carregaTabela"
+      [dadosGrid]="dadosGrid"
+      [dataKey]="dataKey"
+      [colunas]="colunas"
+      (emissorPaginacao)="recebePaginacao($event)"
+      (emissorEditar)="editaTabela($event)"
+      (emissorRemover)="removeItemTabela($event)"
+    ></app-tabela>
+  </div>
+</div>
+<p-confirmDialog key="dialog-prioridades" />
+<p-toast key="toast-prioridades" position="top-center"></p-toast>
